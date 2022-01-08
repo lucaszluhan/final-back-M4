@@ -1,15 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-
-import { createConnection } from './database/connections';
+import 'reflect-metadata';
+import DatabaseConnection from './Core/database/connections/connections';
+import { initServer } from './Core/presentations/server';
+require('dotenv/config');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-createConnection()
+DatabaseConnection.initConnection()
    .then(() => {
-      app.listen(8081, () => console.log('Server is running...'));
+      initServer();
    })
    .catch((error) => {
       console.log(error);
