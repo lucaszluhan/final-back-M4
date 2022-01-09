@@ -22,7 +22,7 @@ export default class NotesController {
          const rep = new NotesRepository();
          rep.create({
             uid: randomUUID(),
-            note_numb: parseInt(note_numb),
+            note_numb: 0,
             description: description as string,
             detail: detail as string,
             user_uid: id as string,

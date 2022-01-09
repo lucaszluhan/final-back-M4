@@ -25,7 +25,20 @@ export default class UsersController {
          });
          res.status(201).send({ ok: true, msg: 'usuario criado' });
       } catch (error) {
-         res.status(500).send({ ok: false, error });
+         res.status(500).send({ ok: false, error, msg: 'falha ao criar novo usuario' });
+      }
+   }
+
+   async login(req: Request, res: Response) {
+      try {
+         const { name, password } = req.body;
+         const rep = new UsersRepository();
+         const users = await rep.list();
+         let logUser = users.filter((user) => user.name == name && user.password == password)[0];
+
+         res.status(200).send({ ok: true, data: { uid: logUser.uid }, msg: 'logado com sucesso' });
+      } catch (error) {
+         res.status(500).send({ ok: false, error, msg: 'Falha de login.' });
       }
    }
 }
